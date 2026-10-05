@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PD 1344 Reviewer — NHA Writ of Execution</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --brick:#5e2c22;
+  --brick-2:#733a2c;
+  --wheat:#c9962e;
+  --wheat-light:#e8c877;
+  --forest:#33502f;
+  --forest-light:#537a4c;
+  --parchment:#f7f0da;
+  --parchment-2:#eee0b8;
+  --line:#ddc99a;
+  --ink:#241d16;
+  --ink-soft:#5c5240;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --serif:'Spectral', Georgia, 'Times New Roman', serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--brick);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--wheat-light); color:var(--brick);}
+
+.app{ display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+@media (max-width:900px){ .app{grid-template-columns:1fr;} }
+
+.sidebar{
+  background:var(--brick); color:#e9ddd0; padding:28px 20px 24px;
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  border-right:1px solid rgba(232,200,119,0.18);
+}
+@media (max-width:900px){
+  .sidebar{position:static; height:auto; border-right:none; border-bottom:1px solid rgba(232,200,119,0.18); padding:18px 16px;}
+}
+.crest{ display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+.crest-mark{
+  width:44px;height:44px;flex:0 0 44px; border-radius:50%;
+  background:radial-gradient(circle at 32% 28%, var(--wheat-light), var(--wheat) 55%, #8a611c 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif); font-weight:700; color:var(--brick); font-size:13px;
+  box-shadow:0 0 0 3px rgba(232,200,119,0.15);
+}
+.crest-text .k1{font-family:var(--serif); font-size:19px; font-weight:600; color:#f7f0da; line-height:1.1;}
+.crest-text .k2{font-size:11px; letter-spacing:.04em; color:#c2ac93; margin-top:2px;}
+
+.nav-group-label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.11em; color:#a68f76; margin:20px 0 8px; font-weight:600; }
+.nav-group-label:first-of-type{margin-top:4px;}
+nav.tabs{display:flex; flex-direction:column; gap:2px;}
+@media (max-width:900px){ nav.tabs{flex-direction:row; flex-wrap:wrap;} }
+.tab-btn{
+  all:unset; cursor:pointer; display:flex; align-items:center; gap:10px;
+  padding:9px 10px; border-radius:7px; font-size:13.5px; color:#d9c8b5;
+  transition:background .15s ease, color .15s ease;
+}
+.tab-btn:hover{background:rgba(232,200,119,0.08); color:#f7f0da;}
+.tab-btn.active{background:rgba(232,200,119,0.14); color:#f7f0da; font-weight:600;}
+.tab-btn .dot{width:6px;height:6px;border-radius:50%;background:#7a5c47; flex:0 0 6px;}
+.tab-btn.active .dot{background:var(--wheat-light);}
+
+.side-foot{ margin-top:26px; padding-top:16px; border-top:1px solid rgba(232,200,119,0.15); font-size:11px; color:#a68f76; line-height:1.6; }
+
+main.content{ background:var(--parchment); min-height:100vh; }
+.topbar{
+  position:sticky; top:0; z-index:20; background:var(--parchment); border-bottom:1px solid var(--line);
+  padding:16px 32px; display:flex; gap:16px; align-items:center;
+}
+@media (max-width:640px){ .topbar{padding:12px 16px; flex-wrap:wrap;} }
+.search-wrap{flex:1; position:relative; max-width:480px;}
+.search-wrap input{
+  width:100%; padding:10px 14px 10px 36px; border-radius:8px; border:1px solid var(--line);
+  background:#fff; font-family:var(--sans); font-size:13.5px; color:var(--ink); outline:none;
+}
+.search-wrap input:focus{border-color:var(--wheat);}
+.search-wrap svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.45;}
+.topbar-title{font-family:var(--serif); font-size:15px; color:var(--ink-soft); margin-left:auto; white-space:nowrap;}
+@media (max-width:640px){ .topbar-title{display:none;} }
+
+.view{padding:32px; max-width:940px; margin:0 auto;}
+@media (max-width:640px){ .view{padding:20px 16px;} }
+.view-header{margin-bottom:26px;}
+.eyebrow-row{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+.badge-pill{ font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; background:var(--brick); color:var(--wheat-light); padding:3px 9px; border-radius:20px; }
+h1.view-title{font-family:var(--serif); font-size:32px; font-weight:600; margin:0 0 8px; color:var(--brick); line-height:1.15;}
+p.view-sub{font-size:14.5px; color:var(--ink-soft); max-width:62ch; line-height:1.6; margin:0;}
+
+.stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:24px 0 30px;}
+@media (max-width:700px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+.stat-card{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; }
+.stat-card .n{font-family:var(--serif); font-size:24px; color:var(--forest); font-weight:600; line-height:1;}
+.stat-card .l{font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
+
+.home-timeline{border-left:2px solid var(--line); margin-left:8px; padding-left:22px; display:flex; flex-direction:column; gap:20px;}
+.tl-item{position:relative;}
+.tl-item::before{
+  content:''; position:absolute; left:-28.5px; top:3px; width:11px; height:11px; border-radius:50%;
+  background:var(--wheat); border:2px solid var(--parchment); box-shadow:0 0 0 2px var(--wheat);
+}
+.tl-date{font-family:var(--mono); font-size:12px; color:var(--forest); font-weight:600;}
+.tl-title{font-family:var(--serif); font-size:16.5px; font-weight:600; color:var(--brick); margin:2px 0 3px;}
+.tl-desc{font-size:13.5px; color:var(--ink-soft); line-height:1.55; max-width:64ch;}
+
+.quicklinks{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:26px;}
+@media (max-width:640px){ .quicklinks{grid-template-columns:1fr;} }
+.qlink{ display:block; text-decoration:none; background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px 18px; cursor:pointer; transition:border-color .15s, transform .1s; }
+.qlink:hover{border-color:var(--wheat);}
+.qlink .qt{font-family:var(--serif); font-weight:600; color:var(--brick); font-size:15px;}
+.qlink .qd{font-size:12.5px; color:var(--ink-soft); margin-top:4px;}
+
+.article-block{margin-bottom:34px;}
+.article-heading{
+  font-family:var(--serif); font-size:19px; font-weight:600; color:var(--brick);
+  padding-bottom:8px; margin-bottom:14px; border-bottom:2px solid var(--wheat);
+  display:flex; align-items:baseline; gap:10px;
+}
+.article-heading .tag{font-family:var(--mono); font-size:11px; color:var(--forest); font-weight:600;}
+
+.sec-card{ background:#fff; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden; }
+.sec-head{ all:unset; box-sizing:border-box; cursor:pointer; width:100%; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+.sec-num{ font-family:var(--mono); font-size:12px; color:#fff; background:var(--brick); padding:3px 8px; border-radius:5px; flex:0 0 auto; white-space:nowrap; }
+.sec-title{font-family:var(--serif); font-weight:600; font-size:15px; color:var(--ink); flex:1;}
+.sec-chevron{transition:transform .2s ease; color:var(--ink-soft); flex:0 0 auto;}
+.sec-card.open .sec-chevron{transform:rotate(180deg);}
+.sec-body{ max-height:0; overflow:hidden; transition:max-height .25s ease; padding:0 16px; }
+.sec-card.open .sec-body{padding:0 16px 16px;}
+.sec-body-inner{font-size:14px; line-height:1.65; color:var(--ink);}
+.sec-body-inner p{margin:0 0 10px;}
+.sec-body-inner ul{margin:0 0 10px; padding-left:20px;}
+.sec-body-inner li{margin-bottom:5px;}
+.kw{ background:linear-gradient(transparent 60%, var(--wheat-light) 60%); font-weight:600; }
+.trap-box{ background:#eaf0e7; border-left:3px solid var(--forest); border-radius:6px; padding:10px 12px; font-size:13px; color:#20351d; margin-top:8px; display:flex; gap:8px; }
+.trap-box .lbl{font-family:var(--mono); font-weight:700; font-size:10.5px; color:var(--forest); white-space:nowrap; padding-top:1px;}
+
+.glossary-grid{display:grid; grid-template-columns:1fr; gap:10px;}
+.g-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+.g-term{font-family:var(--serif); font-weight:700; color:var(--brick); font-size:15px;}
+.g-abbr{font-family:var(--mono); font-size:11px; color:var(--forest); margin-left:6px;}
+.g-def{font-size:13.5px; color:var(--ink-soft); margin-top:4px; line-height:1.55;}
+
+.people-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+@media (max-width:640px){ .people-grid{grid-template-columns:1fr;} }
+.p-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px;}
+.p-name{font-family:var(--serif); font-weight:700; color:var(--brick); font-size:16px;}
+.p-role{font-size:11.5px; color:var(--forest); font-weight:600; margin:2px 0 8px; text-transform:uppercase; letter-spacing:.03em;}
+.p-desc{font-size:13px; color:var(--ink-soft); line-height:1.55;}
+
+.trap-list{display:flex; flex-direction:column; gap:10px;}
+.trap-item{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--forest); border-radius:8px; padding:14px 16px; }
+.trap-item .tnum{font-family:var(--mono); font-size:11px; color:var(--forest); font-weight:700;}
+.trap-item .ttitle{font-family:var(--serif); font-weight:600; font-size:14.5px; color:var(--brick); margin:3px 0 4px;}
+.trap-item .tbody{font-size:13.5px; color:var(--ink-soft); line-height:1.55;}
+
+.quiz-box{background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px;}
+.quiz-progress{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin-bottom:10px;}
+.quiz-q{font-family:var(--serif); font-size:17px; font-weight:600; color:var(--brick); margin-bottom:16px; line-height:1.4;}
+.quiz-opts{display:flex; flex-direction:column; gap:8px;}
+.quiz-opt{
+  all:unset; box-sizing:border-box; cursor:pointer; display:block; padding:11px 14px;
+  border:1px solid var(--line); border-radius:8px; font-size:13.5px; transition:border-color .15s, background .15s;
+}
+.quiz-opt:hover{border-color:var(--wheat);}
+.quiz-opt.correct{background:#eaf3ea; border-color:#4c6b52; color:#284a2c; font-weight:600;}
+.quiz-opt.wrong{background:#f7e6e1; border-color:#a8452e; color:#5c2317; font-weight:600;}
+.quiz-opt.disabled{pointer-events:none;}
+.quiz-explain{ margin-top:14px; padding:12px 14px; background:var(--parchment-2); border-radius:8px; font-size:13px; color:var(--ink-soft); line-height:1.55; display:none; }
+.quiz-explain.show{display:block;}
+.quiz-nav{display:flex; justify-content:space-between; align-items:center; margin-top:18px;}
+.btn{ all:unset; cursor:pointer; font-family:var(--sans); font-weight:600; font-size:13px; background:var(--brick); color:#f7f0da; padding:10px 18px; border-radius:7px; }
+.btn:hover{background:var(--brick-2);}
+.btn.ghost{background:transparent; color:var(--ink-soft); border:1px solid var(--line);}
+.quiz-score{font-family:var(--serif); font-size:22px; color:var(--brick); text-align:center; padding:20px 0;}
+.quiz-score .sub{font-family:var(--sans); font-size:13px; color:var(--ink-soft); font-weight:400; margin-top:6px;}
+
+.hidden{display:none !important;}
+.nores{padding:40px 0; text-align:center; color:var(--ink-soft); font-size:14px;}
+</style>
+</head>
+<body><div class="app"><aside class="sidebar"><div class="crest"><div class="crest-mark">WE</div><div class="crest-text"><div class="k1">Enforcement Codex</div><div class="k2">PD 1344 · REB &amp; REA</div></div></div>
+<div class="nav-group-label">Reviewer</div><nav class="tabs"><button class="tab-btn active" data-tab="home"><span class="dot"></span>Overview</button><button class="tab-btn" data-tab="law"><span class="dot"></span>PD 1344 — The Decree</button><button class="tab-btn" data-tab="lineage"><span class="dot"></span>Agency Lineage</button><button class="tab-btn" data-tab="related"><span class="dot"></span>Related Laws</button></nav>
+<div class="nav-group-label">Study Aids</div><nav class="tabs"><button class="tab-btn" data-tab="dates"><span class="dot"></span>Important Dates</button><button class="tab-btn" data-tab="people"><span class="dot"></span>Important People</button><button class="tab-btn" data-tab="glossary"><span class="dot"></span>Glossary of Terms</button><button class="tab-btn" data-tab="traps"><span class="dot"></span>Board Exam Traps</button><button class="tab-btn" data-tab="quiz"><span class="dot"></span>Self-Test Quiz</button></nav>
+<div class="side-foot">Verify current DHSUD/HSAC issuances before the exam.</div></aside>
+<main class="content"><div class="topbar"><div class="search-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="searchInput" type="text" placeholder="Search sections, terms, dates, traps…"></div><div class="topbar-title" id="topbarTitle">Overview</div></div><div class="view" id="viewRoot"></div></main></div>
+<script>
+const dates=[{"date": "Jul 12, 1976", "title": "PD 957 signed", "desc": "Subdivision and Condominium Buyers' Protective Decree — vested the NHA with exclusive jurisdiction over the real estate trade and business, but gave it no express way to enforce its own decisions."}, {"date": "Apr 2, 1978", "title": "PD 1344 signed", "desc": "'Empowering the National Housing Authority to Issue Writ of Execution in the Enforcement of Its Decision Under PD 957' — signed by Pres. Ferdinand E. Marcos, in response to buyer complaints that NHA decisions were unenforceable."}, {"date": "Feb 7, 1981", "title": "EO 648", "desc": "Transferred the regulatory and quasi-judicial functions of the NHA (including PD 1344 jurisdiction) to the newly created Human Settlements Regulatory Commission (HSRC)."}, {"date": "Dec 17, 1986", "title": "EO 90", "desc": "Renamed the HSRC to the Housing and Land Use Regulatory Board (HLURB) — the agency examinees most associate with PD 1344 jurisdiction."}, {"date": "Feb 14, 2019", "title": "RA 11201 — DHSUD Act", "desc": "Abolished the HLURB; created the DHSUD for policy/regulation and the Human Settlements Adjudication Commission (HSAC) to take over PD 1344's quasi-judicial (adjudicatory) functions."}];
+const people=[{"name": "Pres. Ferdinand E. Marcos", "role": "Signed PD 1344 (Apr 2, 1978)", "desc": "Also signed PD 957 (1976), the decree PD 1344 enforces."}, {"name": "National Housing Authority (NHA)", "role": "Original holder of PD 1344 jurisdiction", "desc": "Vested with exclusive jurisdiction to hear and decide buyer complaints under PD 957, and by PD 1344, to enforce its own decisions via writ of execution."}, {"name": "HSRC → HLURB", "role": "Successor regulator (1981–2019)", "desc": "Took over the NHA's PD 1344 adjudicatory jurisdiction via EO 648 (1981), renamed HLURB by EO 90 (1986)."}, {"name": "HSAC (Human Settlements Adjudication Commission)", "role": "Current adjudicator", "desc": "Created under RA 11201 (2019); now exercises the quasi-judicial/adjudicatory jurisdiction PD 1344 originally gave the NHA."}, {"name": "DHSUD", "role": "Current policy/regulatory agency", "desc": "Holds the rule-making and regulatory functions; HSAC (an attached commission) handles adjudication of PD 1344-type cases."}, {"name": "Subdivision/condominium buyers", "role": "Intended beneficiaries", "desc": "PD 1344's preamble cites buyers' 'disillusionment and skepticism' over unenforceable NHA decisions as the reason for the decree."}, {"name": "Project owner, developer, dealer, broker, salesman", "role": "Respondents in PD 1344 cases", "desc": "The persons a buyer's complaint (refund, specific performance, unsound practices) may be filed against."}];
+const glossary=[{"term": "Writ of execution", "abbr": "Sec. 1 concept", "def": "An order enforcing a final decision — here, one issued administratively by the NHA/HLURB/HSAC rather than by a trial court."}, {"term": "Exclusive jurisdiction", "abbr": "Sec. 1", "def": "Only the housing regulator (not the RTC) may hear and decide the three enumerated case types."}, {"term": "Unsound real estate business practices", "abbr": "Sec. 1(a)", "def": "Broad, catch-all category of deceptive/unfair developer or broker conduct."}, {"term": "Specific performance", "abbr": "Sec. 1(c)", "def": "A remedy compelling a party to perform a contractual/statutory obligation, rather than merely pay damages."}, {"term": "Final and executory", "abbr": "Sec. 2", "def": "The status a decision reaches after 15 days from receipt, with no timely appeal/motion for reconsideration filed — after which execution may issue."}, {"term": "NHA (National Housing Authority)", "abbr": "PD 757 / PD 957", "def": "Original holder of PD 1344 jurisdiction (1978)."}, {"term": "HSRC", "abbr": "EO 648 (1981)", "def": "First successor agency to hold PD 1344 jurisdiction."}, {"term": "HLURB", "abbr": "EO 90 (1986)", "def": "Renamed HSRC; long-time holder of PD 1344 jurisdiction, most cited in older case law."}, {"term": "DHSUD", "abbr": "RA 11201 (2019)", "def": "Current department for housing policy and regulation."}, {"term": "HSAC", "abbr": "RA 11201 (2019)", "def": "Human Settlements Adjudication Commission — current quasi-judicial body exercising PD 1344 adjudicatory jurisdiction."}];
+const lawArticles=[{"heading": "Why PD 1344 Was Needed", "tag": "Preamble", "sections": [{"num": "The gap in PD 957", "title": "Jurisdiction without teeth", "body": "<p>PD 957 gave the NHA <span class='kw'>exclusive jurisdiction</span> over the real estate trade and business, but did <span class='kw'>not expressly provide a means to enforce</span> its decisions — making favorable rulings for buyers 'inutile' (useless) if the losing developer simply refused to comply.</p>"}, {"num": "The fix", "title": "A writ of execution power", "body": "<p>PD 1344 (Apr 2, 1978) was issued specifically to <span class='kw'>strengthen the NHA's powers</span> so it could enforce and execute its own decisions, rather than needing a separate court action just to collect on a favorable ruling.</p>"}]}, {"heading": "Section 1 — Exclusive Jurisdiction", "tag": "The three case types", "sections": [{"num": "(a) Unsound real estate business practices", "title": "Broadest, catch-all category", "body": "<p>Covers deceptive, unfair or abusive practices by developers/dealers/brokers/salesmen in the real estate trade — not limited to a specific contract violation.</p>"}, {"num": "(b) Refund and other claims", "title": "Buyer vs. seller-side actors", "body": "<p>Claims involving <span class='kw'>refund</span> and any other claims filed by a subdivision lot or condominium unit buyer <span class='kw'>against the project owner, developer, dealer, broker or salesman</span>.</p>"}, {"num": "(c) Specific performance", "title": "Enforcing the contract itself", "body": "<p>Cases involving <span class='kw'>specific performance</span> of contractual and statutory obligations filed by buyers against the owner, developer, dealer, broker or salesman — e.g., compelling delivery of title, completion of subdivision facilities.</p><div class='trap-box'><span class='lbl'>TRAP</span><span>The jurisdiction under PD 1344 runs only ONE way in these enumerated categories — buyer vs. seller-side actors over subdivision/condo matters. It is 'exclusive,' meaning regular courts (RTC) have no jurisdiction over these specific case types — a classic Supreme Court doctrine (e.g., Solid Homes v. Payawal).</span></div>"}]}, {"heading": "Section 2 — Finality of Decisions", "tag": "15-day rule", "sections": [{"num": "Finality period", "title": "15 days from receipt", "body": "<p>The decision of the NHA (now, in practice, the HSAC) becomes <span class='kw'>final and executory</span> after the lapse of <span class='kw'>fifteen (15) days</span> from the date of its receipt by the party — this is what then allows the writ of execution to issue.</p><div class='trap-box'><span class='lbl'>TRAP</span><span>Don't confuse this 15-day period with the reglementary periods under other laws (e.g., the 30-day adverse claim period under PD 1529, or general appeal periods under the Rules of Court). PD 1344's own finality clock is 15 days.</span></div>"}]}, {"heading": "Effect: The Writ of Execution", "tag": "Enforcement mechanism", "sections": [{"num": "What a writ of execution does", "title": "Compels compliance", "body": "<p>Once a decision is final, the NHA (now HSAC) may issue a <span class='kw'>writ of execution</span> — an order directing enforcement of the decision (e.g., ordering a sheriff or authorized officer to implement payment of a refund, or compel specific performance) without the buyer needing to file a separate civil action in court.</p>"}, {"num": "Administrative, not judicial", "title": "Character of the remedy", "body": "<p>This is an <span class='kw'>administrative enforcement mechanism</span> exercised by a quasi-judicial body (the housing regulator), distinguishable from a court's writ of execution under the Rules of Court, though it operates on the same basic principle: give teeth to a final judgment/decision.</p>"}]}];
+const lineageArticles=[{"heading": "From NHA to HSAC — Tracing PD 1344's Jurisdiction", "tag": "1978 → today", "sections": [{"num": "1978 — NHA", "title": "Original holder", "body": "<p>PD 1344 vested this power directly in the <span class='kw'>National Housing Authority</span>, the sole housing regulator at the time (created by PD 757, 1975).</p>"}, {"num": "1981 — HSRC", "title": "First transfer", "body": "<p>EO 648 transferred the NHA's <span class='kw'>regulatory and quasi-judicial functions</span> (including PD 1344 jurisdiction) to the newly created Human Settlements Regulatory Commission.</p>"}, {"num": "1986 — HLURB", "title": "Renamed", "body": "<p>EO 90 renamed the HSRC as the <span class='kw'>Housing and Land Use Regulatory Board</span> — the name most reviewers and older case law associate with PD 1344 jurisdiction.</p>"}, {"num": "2019 — DHSUD / HSAC", "title": "Current split", "body": "<p>RA 11201 created the DHSUD (policy and regulation) and the <span class='kw'>Human Settlements Adjudication Commission (HSAC)</span>, an attached quasi-judicial body that now exercises PD 1344's adjudicatory jurisdiction — the modern successor for exam purposes.</p><div class='trap-box'><span class='lbl'>TRAP</span><span>A board question that says 'NHA' or 'HLURB' may be testing the HISTORICAL name at the time of a certain case or law. If asked about the CURRENT body with PD 1344 jurisdiction, the answer is HSAC (adjudication) under DHSUD (policy), not HLURB or NHA.</span></div>"}]}, {"heading": "Why 'Exclusive Jurisdiction' Matters", "tag": "Doctrine", "sections": [{"num": "Regular courts have no jurisdiction", "title": "Solid Homes, Inc. v. Payawal doctrine", "body": "<p>The Supreme Court has held that <span class='kw'>exclusive jurisdiction</span> over PD 1344 Sec. 1 case types (a), (b), (c) is vested in the housing regulator (formerly NHA/HLURB, now effectively HSAC), <span class='kw'>not the Regional Trial Court</span> — a complaint filed in the wrong forum may be dismissed for lack of jurisdiction.</p>"}, {"num": "Scope limitation", "title": "Must involve a subdivision/condo project", "body": "<p>Jurisprudence clarifies the case must involve a <span class='kw'>subdivision project, subdivision lot, condominium project or condominium unit</span> — disputes outside this scope (e.g., a purely personal loan unrelated to a subdivision/condo transaction) fall outside PD 1344/HLURB-HSAC jurisdiction, even between the same parties.</p>"}]}];
+const relatedArticles=[{"heading": "The PD 957 Enforcement Family", "tag": "", "sections": [{"num": "PD 957 (1976)", "title": "The decree being enforced", "body": "<p>PD 1344 does not stand alone — it exists solely to give teeth to NHA/regulator decisions <span class='kw'>under PD 957</span>. Substantive buyer-protection rules remain in PD 957; PD 1344 is purely about <span class='kw'>enforcement mechanism</span>.</p>"}, {"num": "PD 1216 (1977)", "title": "A separate PD 957 amendment", "body": "<p>PD 1216 amended Sec. 31 of PD 957 (open space); PD 1344 does not touch Sec. 31 — the two decrees amend/supplement PD 957 in <span class='kw'>different, unrelated respects</span> (design standard vs. enforcement power).</p>"}, {"num": "PD 1529", "title": "Property Registration Decree", "body": "<p>Separate registration regime; a PD 1344 writ of execution enforces a housing-regulator decision, while PD 1529 governs the Torrens title system generally — don't conflate a 'writ of execution' here with registration remedies like a notice of lis pendens or adverse claim.</p>"}]}, {"heading": "Regulatory and Procedural Companions", "tag": "", "sections": [{"num": "EO 648 (1981) / EO 90 (1986)", "title": "Agency reorganizations", "body": "<p>Transferred and renamed the agency exercising PD 1344 jurisdiction — NHA → HSRC → HLURB.</p>"}, {"num": "RA 11201 (2019) — DHSUD Act", "title": "Current framework", "body": "<p>Created DHSUD and HSAC; HSAC now functions as the quasi-judicial successor exercising PD 1344's adjudicatory powers.</p>"}, {"num": "RA 9646 — RESA Law", "title": "Professional regulation", "body": "<p>Brokers and appraisers should know that unsound practices by a broker/salesman fall squarely within PD 1344 Sec. 1(a) jurisdiction — a professional-conduct overlap point.</p>"}, {"num": "Rules of Court", "title": "General analogy, not source", "body": "<p>A 'writ of execution' is a familiar concept from civil procedure; PD 1344 borrows the term but creates its <span class='kw'>own administrative</span> version, issued by the housing regulator, not a trial court.</p>"}]}];
+const traps=[{"t": "A dissatisfied buyer may sue the developer directly in the RTC for a PD 957 refund claim", "b": "False — Sec. 1 vests EXCLUSIVE jurisdiction over refund/specific performance/unsound-practice claims in the housing regulator (NHA/HLURB, now effectively HSAC), not the RTC (Solid Homes v. Payawal)."}, {"t": "PD 1344 created new substantive buyer rights", "b": "False — PD 1344 only gives the NHA an ENFORCEMENT MECHANISM (writ of execution) for decisions already authorized under PD 957; it doesn't create new substantive rights."}, {"t": "The finality period under PD 1344 is 30 days", "b": "False — it's 15 days from receipt of the decision (Sec. 2)."}, {"t": "HLURB currently exercises PD 1344 jurisdiction", "b": "Outdated — HLURB was abolished by RA 11201 (2019); the HSAC (under/attached to DHSUD) now exercises the adjudicatory function."}, {"t": "PD 1344's jurisdiction covers any dispute between a developer and any person", "b": "False — jurisprudence limits it to disputes involving an actual subdivision project, subdivision lot, condominium project, or condominium unit."}, {"t": "PD 1344 is a stand-alone, independent housing law", "b": "False — it exists solely to enforce decisions rendered UNDER PD 957; it has no independent substantive scope."}, {"t": "PD 1344 covers claims by developers against buyers", "b": "False — Sec. 1(b) and (c) are framed as claims filed BY buyers AGAINST the project owner/developer/dealer/broker/salesman."}, {"t": "The three categories under Sec. 1 are illustrative, not exhaustive", "b": "Careful — while 'unsound real estate business practices' (a) is broad/catch-all, jurisdiction is still limited to the three named categories tied to subdivision/condo transactions."}, {"t": "PD 1344 was signed the same year as PD 957", "b": "False — PD 957 was 1976; PD 1344 was signed April 2, 1978, two years later, precisely because PD 957's remedy proved unenforceable."}];
+const quiz=[{"q": "PD 1344 was signed on:", "opts": ["Jul 12, 1976", "Oct 14, 1977", "Apr 2, 1978", "Mar 25, 1982"], "a": 2, "ex": "PD 1344 was signed April 2, 1978."}, {"q": "PD 1344 primarily empowers the NHA to:", "opts": ["Classify subdivisions", "Issue a writ of execution to enforce its PD 957 decisions", "Create new subdivision design standards", "Register condominium titles"], "a": 1, "ex": "Its sole purpose is to let the NHA enforce/execute its own decisions under PD 957."}, {"q": "Which of the following is NOT one of the three case types under Sec. 1?", "opts": ["Unsound real estate business practices", "Refund claims by buyers", "Specific performance claims by buyers", "Criminal prosecution of squatters"], "a": 3, "ex": "The three categories are (a) unsound practices, (b) refund/other claims, (c) specific performance — all buyer-initiated."}, {"q": "A decision under PD 1344 becomes final and executory after:", "opts": ["7 days", "15 days", "30 days", "60 days"], "a": 1, "ex": "Sec. 2: 15 days from receipt of the decision."}, {"q": "Which body currently exercises the quasi-judicial/adjudicatory function PD 1344 originally gave the NHA?", "opts": ["HLURB", "HSAC", "SEC", "LRA"], "a": 1, "ex": "RA 11201 (2019) created HSAC, now the adjudicatory successor; HLURB was abolished."}, {"q": "Under the Solid Homes v. Payawal doctrine, jurisdiction over a PD 1344 case type is:", "opts": ["Concurrent with the RTC", "Exclusive to the housing regulator, not the RTC", "Exclusive to the RTC", "Shared equally with the barangay"], "a": 1, "ex": "Exclusive jurisdiction lies with the housing regulator (NHA/HLURB, now HSAC), not the regular courts."}, {"q": "Which agency exercised PD 1344 jurisdiction immediately after the NHA, starting 1981?", "opts": ["DHSUD", "HSAC", "HSRC", "HLURB"], "a": 2, "ex": "EO 648 (1981) created the HSRC as the first successor; it was later renamed HLURB (1986)."}, {"q": "PD 1344 case types must involve:", "opts": ["Any civil dispute between private persons", "A subdivision project, subdivision lot, condominium project, or condominium unit", "Only agricultural land disputes", "Only criminal complaints"], "a": 1, "ex": "Jurisprudence limits PD 1344/HLURB-HSAC jurisdiction to subdivision/condominium-related matters."}];
+const viewRoot=document.getElementById('viewRoot');const topbarTitle=document.getElementById('topbarTitle');let currentTab='home';let quizIdx=0,quizScore=0,quizAnswered=false;
+function accordionHTML(articles){
+  return articles.map((art) => `
+    <div class="article-block">
+      <div class="article-heading"><span>${art.heading}</span><span class="tag">${art.tag}</span></div>
+      ${art.sections.map((s) => `
+        <div class="sec-card" data-search="${(s.title+' '+s.num+' '+s.body+(s.trap||'')).toLowerCase().replace(/"/g,'&quot;')}">
+          <button class="sec-head" onclick="toggleSec(this)">
+            <span class="sec-num">${s.num}</span>
+            <span class="sec-title">${s.title}</span>
+            <svg class="sec-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="sec-body"><div class="sec-body-inner">
+            ${s.body}
+            ${s.trap ? `<div class="trap-box"><span class="lbl">TRAP</span><span>${s.trap}</span></div>` : ''}
+          </div></div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function toggleSec(btn){
+  const card = btn.closest('.sec-card');
+  const body = card.querySelector('.sec-body');
+  const isOpen = card.classList.contains('open');
+  if(isOpen){
+    card.classList.remove('open');
+    body.style.maxHeight = null;
+  } else {
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 40 + 'px';
+  }
+}
+
+function renderHome(){topbarTitle.textContent='Overview';viewRoot.innerHTML=`
+<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">Enforcement Law</span></div><h1 class="view-title">PD 1344 — NHA Writ of Execution under PD 957</h1>
+<p class="view-sub">Empowers the housing regulator (originally the NHA, now effectively DHSUD/HSAC) to issue a writ of execution enforcing its own decisions under PD 957 — the administrative enforcement arm of buyer-protection law. Relevant to REB Special and Technical and REA Land Management.</p></div>
+<div class="stat-row"><div class="stat-card"><div class="n">1978</div><div class="l">Signed Apr 2, 1978</div></div><div class="stat-card"><div class="n">3</div><div class="l">Exclusive jurisdiction case types (Sec. 1 a-c)</div></div><div class="stat-card"><div class="n">15 days</div><div class="l">Finality period from receipt (Sec. 2)</div></div><div class="stat-card"><div class="n">HSAC</div><div class="l">Current adjudicatory successor (RA 11201, 2019)</div></div></div>
+<div class="quicklinks"><div class="qlink" onclick="switchTab('law')"><div class="qt">Read PD 1344 →</div><div class="qd">Why it exists, Sec. 1 jurisdiction, Sec. 2 finality.</div></div><div class="qlink" onclick="switchTab('lineage')"><div class="qt">Agency Lineage →</div><div class="qd">NHA → HSRC → HLURB → DHSUD/HSAC.</div></div><div class="qlink" onclick="switchTab('related')"><div class="qt">Related Laws →</div><div class="qd">PD 957, PD 1216, EO 648/90, RA 11201.</div></div><div class="qlink" onclick="switchTab('dates')"><div class="qt">Important Dates →</div><div class="qd">1976 to 2019 timeline.</div></div></div>`;}
+function renderDates(){topbarTitle.textContent='Important Dates';viewRoot.innerHTML=`<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">When</span></div><h1 class="view-title">Important Dates</h1><p class="view-sub">Chronology of PD 1344 and its agency lineage.</p></div><div class="home-timeline">${dates.map(t=>`<div class="tl-item" data-search="${(t.date+' '+t.title+' '+t.desc).toLowerCase().replace(/"/g,'&quot;')}"><div class="tl-date">${t.date}</div><div class="tl-title">${t.title}</div><div class="tl-desc">${t.desc}</div></div>`).join('')}</div>`;}
+function renderPeople(){topbarTitle.textContent='Important People';viewRoot.innerHTML=`<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">Who</span></div><h1 class="view-title">Important People and Institutions</h1><p class="view-sub">Presidents, agencies and stakeholders tied to PD 1344.</p></div><div class="people-grid">${people.map(p=>`<div class="p-card" data-search="${(p.name+' '+p.role+' '+p.desc).toLowerCase().replace(/"/g,'&quot;')}"><div class="p-name">${p.name}</div><div class="p-role">${p.role}</div><div class="p-desc">${p.desc}</div></div>`).join('')}</div>`;}
+function renderLaw(){topbarTitle.textContent='PD 1344 — The Decree';viewRoot.innerHTML=`<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">Secs. 1–2</span></div><h1 class="view-title">PD 1344, Section by Section</h1><p class="view-sub">Why it exists, the three jurisdiction categories, and the 15-day finality rule.</p></div><div id="lawSections">${accordionHTML(lawArticles)}</div>`;}
+function renderLineage(){topbarTitle.textContent='Agency Lineage';viewRoot.innerHTML=`<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">1978 → today</span></div><h1 class="view-title">From NHA to HSAC</h1><p class="view-sub">Tracing who exercises PD 1344 jurisdiction today.</p></div><div id="lineageSections">${accordionHTML(lineageArticles)}</div>`;}
+function renderRelated(){topbarTitle.textContent='Related Laws';viewRoot.innerHTML=`<div class="view-header"><div class="eyebrow-row"><span class="badge-pill">Distinctions</span></div><h1 class="view-title">Related Laws</h1><p class="view-sub">PD 957, PD 1216, EO 648/90, RA 11201, RA 9646.</p></div><div id="relatedSections">${accordionHTML(relatedArticles)}</div>`;}
+function renderGlossary(){
+  topbarTitle.textContent = 'Glossary';
+  viewRoot.innerHTML = `
+    <div class="view-header">
+      <div class="eyebrow-row"><span class="badge-pill">Terms</span></div>
+      <h1 class="view-title">Glossary of Terms</h1>
+      <p class="view-sub">Jurisdiction, enforcement and agency terms in one place.</p>
+    </div>
+    <div class="glossary-grid">
+      ${glossary.map(g => `
+        <div class="g-card" data-search="${(g.term+' '+g.abbr+' '+g.def).toLowerCase().replace(/"/g,'&quot;')}">
+          <span class="g-term">${g.term}</span><span class="g-abbr">${g.abbr}</span>
+          <div class="g-def">${g.def}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderTraps(){
+  topbarTitle.textContent = 'Board Exam Traps';
+  viewRoot.innerHTML = `
+    <div class="view-header">
+      <div class="eyebrow-row"><span class="badge-pill">Jurisdiction and finality-period gotchas</span></div>
+      <h1 class="view-title">Board Exam Traps</h1>
+      <p class="view-sub">15-day finality confusions, exclusive-jurisdiction traps, and outdated agency names.</p>
+    </div>
+    <div class="trap-list">
+      ${traps.map((t,i) => `
+        <div class="trap-item" data-search="${(t.t+' '+t.b).toLowerCase().replace(/"/g,'&quot;')}">
+          <div class="tnum">TRAP ${i+1}</div>
+          <div class="ttitle">${t.t}</div>
+          <div class="tbody">${t.b}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderQuiz(reset){
+  topbarTitle.textContent = 'Self-Test Quiz';
+  if(reset){ quizIdx = 0; quizScore = 0; }
+  quizAnswered = false;
+
+  if(quizIdx >= quiz.length){
+    viewRoot.innerHTML = `
+      <div class="view-header">
+        <div class="eyebrow-row"><span class="badge-pill">Results</span></div>
+        <h1 class="view-title">Quiz Complete</h1>
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-score">${quizScore} / ${quiz.length} correct
+          <div class="sub">${quizScore === quiz.length ? "Perfect score — ready for the board." : quizScore/quiz.length >= 0.7 ? "Solid — review the misses below and go again." : "Keep drilling the jurisdiction list and dates, then retake."}</div>
+        </div>
+        <div class="quiz-nav" style="justify-content:center;">
+          <button class="btn" onclick="renderQuiz(true)">Retake Quiz</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const item = quiz[quizIdx];
+  viewRoot.innerHTML = `
+    <div class="view-header">
+      <div class="eyebrow-row"><span class="badge-pill">Self-Test</span></div>
+      <h1 class="view-title">PD 1344 Quiz</h1>
+      <p class="view-sub">Questions on PD 1344's jurisdiction, finality period, and the HLURB/DHSUD/HSAC lineage.</p>
+    </div>
+    <div class="quiz-box">
+      <div class="quiz-progress">Question ${quizIdx+1} of ${quiz.length} &nbsp;·&nbsp; Score so far: ${quizScore}</div>
+      <div class="quiz-q">${item.q}</div>
+      <div class="quiz-opts">
+        ${item.opts.map((o,i) => `<button class="quiz-opt" onclick="answerQuiz(${i})">${o}</button>`).join('')}
+      </div>
+      <div class="quiz-explain" id="quizExplain">${item.ex}</div>
+      <div class="quiz-nav">
+        <button class="btn ghost" onclick="renderQuiz(true)">Restart</button>
+        <button class="btn" id="quizNextBtn" style="opacity:.4; pointer-events:none;" onclick="nextQuiz()">Next →</button>
+      </div>
+    </div>
+  `;
+}
+
+function answerQuiz(i){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  const item = quiz[quizIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((btn, idx) => {
+    btn.classList.add('disabled');
+    if(idx === item.a) btn.classList.add('correct');
+    else if(idx === i) btn.classList.add('wrong');
+  });
+  if(i === item.a) quizScore++;
+  document.getElementById('quizExplain').classList.add('show');
+  const nb = document.getElementById('quizNextBtn');
+  nb.style.opacity = 1;
+  nb.style.pointerEvents = 'auto';
+}
+
+function nextQuiz(){
+  quizIdx++;
+  renderQuiz(false);
+}
+
+/* ============================================================
+   TAB SWITCHING + SEARCH
+   ============================================================ */
+const renderers = {
+  home: renderHome, law: renderLaw, lineage: renderLineage, related: renderRelated,
+  dates: renderDates, people: renderPeople, glossary: renderGlossary, traps: renderTraps,
+  quiz: () => renderQuiz(true)
+};
+
+function switchTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.getElementById('searchInput').value = '';
+  renderers[tab]();
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  const searchable = document.querySelectorAll('[data-search]');
+  if(!q){
+    searchable.forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('.article-block, .article-heading').forEach(el => el.classList.remove('hidden'));
+    const nores = document.getElementById('noResults');
+    if(nores) nores.remove();
+    return;
+  }
+  let anyVisible = false;
+  searchable.forEach(el => {
+    const match = el.dataset.search.includes(q);
+    el.classList.toggle('hidden', !match);
+    if(match) anyVisible = true;
+    if(match && el.classList.contains('sec-card')){
+      el.classList.add('open');
+      const body = el.querySelector('.sec-body');
+      if(body) body.style.maxHeight = body.scrollHeight + 40 + 'px';
+    }
+  });
+  let nores = document.getElementById('noResults');
+  if(!anyVisible){
+    if(!nores){
+      nores = document.createElement('div');
+      nores.id = 'noResults';
+      nores.className = 'nores';
+      nores.textContent = 'No matches in this section. Try another tab.';
+      viewRoot.appendChild(nores);
+    }
+  } else if(nores){
+    nores.remove();
+  }
+});
+
+/* init */
+renderHome();
+</script>
+</body>
+</html>
